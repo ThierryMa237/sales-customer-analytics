@@ -1,8 +1,14 @@
+# Données (non versionnées : voir le README pour le téléchargement)
 data/raw/
 data/processed/
+powerbi/data/
+
+# Environnement et caches
 .venv/
 __pycache__/
 .ipynb_checkpoints/
+.pytest_cache/
+.DS_Store
+
+# Fichiers Power BI volumineux
 *.pbix
-powerbi/data/ # le classeur est volumineux, on ne le versionne pas
-powerbi/data/ # le classeur est volumineux, on ne le versionne pas
