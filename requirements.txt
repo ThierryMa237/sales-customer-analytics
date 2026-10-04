@@ -1,0 +1,9 @@
+pandas
+numpy
+matplotlib
+sqlalchemy
+psycopg2-binary
+pytest
+jupyter
+openpyxl
+openpyxl

@@ -1,0 +1,67 @@
+// =====================================================================
+// MESURES DAX : Sales & Customer Analytics
+// Tables : FactSales, DimCustomer, DimProduct, DimGeography, DimDate
+// Les mesures vivent dans la table _Measures (une mesure ne peut pas porter
+// le nom d'une colonne de sa table : FactSales[revenue] existe déjà).
+// Périmètre : commandes livrées, janvier 2017 - août 2018.
+//
+// Colonne calculée à part (table DimGeography, New column) :
+//   City State = DimGeography[city] & " (" & DimGeography[state] & ")"
+// Marge : volontairement absente, aucun coût dans les données Olist.
+// =====================================================================
+DEFINE
+    // ---- Base ----
+    MEASURE _Measures[Revenue] = SUM(FactSales[revenue])
+    MEASURE _Measures[Orders] = DISTINCTCOUNT(FactSales[order_id])
+    MEASURE _Measures[Units Sold] = SUM(FactSales[quantity])
+    MEASURE _Measures[Customers] = DISTINCTCOUNT(FactSales[customer_key])
+    MEASURE _Measures[Average Order Value] = DIVIDE([Revenue], [Orders])
+    MEASURE _Measures[Average Revenue per Customer] = DIVIDE([Revenue], [Customers])
+    MEASURE _Measures[Freight] = SUM(FactSales[freight_value])
+    MEASURE _Measures[Freight % of Revenue] = DIVIDE([Freight], [Revenue])
+
+    // ---- Croissance ----
+    MEASURE _Measures[Revenue PM] =
+        CALCULATE([Revenue], DATEADD(DimDate[Date], -1, MONTH))
+    MEASURE _Measures[Revenue MoM %] =
+        VAR Prev = [Revenue PM]
+        RETURN
+            IF(HASONEVALUE(DimDate[Month Start]) && NOT ISBLANK(Prev),
+               DIVIDE([Revenue] - Prev, Prev))
+    MEASURE _Measures[Revenue PY] =
+        CALCULATE([Revenue], SAMEPERIODLASTYEAR(DimDate[Date]))
+    MEASURE _Measures[Revenue Growth] =
+        IF(NOT ISBLANK([Revenue PY]), [Revenue] - [Revenue PY])
+    MEASURE _Measures[Revenue YoY %] =
+        VAR Prev = [Revenue PY]
+        RETURN IF(NOT ISBLANK(Prev), DIVIDE([Revenue] - Prev, Prev))
+
+    // ---- Clients ----
+    MEASURE _Measures[Customers PY] =
+        CALCULATE([Customers], SAMEPERIODLASTYEAR(DimDate[Date]))
+    MEASURE _Measures[Customer Growth %] =
+        VAR Prev = [Customers PY]
+        RETURN IF(NOT ISBLANK(Prev), DIVIDE([Customers] - Prev, Prev))
+    MEASURE _Measures[New Customers] =
+        CALCULATE(DISTINCTCOUNT(FactSales[customer_key]), FactSales[is_first_purchase_day] = 1)
+    MEASURE _Measures[Returning Customers] = [Customers] - [New Customers]
+    MEASURE _Measures[Returning Customers %] = DIVIDE([Returning Customers], [Customers])
+
+    // ---- Produits et géographie ----
+    MEASURE _Measures[Product Contribution %] =
+        DIVIDE([Revenue], CALCULATE([Revenue], ALL(DimProduct)))
+    MEASURE _Measures[Geography Contribution %] =
+        DIVIDE([Revenue], CALCULATE([Revenue], ALL(DimGeography)))
+
+// Test : valeurs attendues 13181027.13 / 96211 / 109880 / 93104 / 137.00 / 141.57 / 2192092.88 / 0.1663
+EVALUATE
+ROW(
+    "Revenue", [Revenue],
+    "Orders", [Orders],
+    "Units", [Units Sold],
+    "Customers", [Customers],
+    "AOV", [Average Order Value],
+    "Rev per customer", [Average Revenue per Customer],
+    "Freight", [Freight],
+    "Freight %", [Freight % of Revenue]
+)

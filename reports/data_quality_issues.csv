@@ -1,0 +1,33 @@
+table,check,n_affected,comment
+customers,customer_id est par commande,3345,utiliser customer_unique_id pour compter les clients
+geolocation,plusieurs coordonnées par code postal,981148,agréger (médiane lat/lng) avant toute jointure
+geolocation,lignes entièrement dupliquées,261831,à dédoublonner ou à justifier
+geolocation,coordonnées hors du Brésil,42,
+items vs payments,écart total items vs total paiements,303,à comprendre avant de choisir la définition du CA
+order_items,outliers IQR : freight_value,12134,"valeurs extrêmes à examiner, pas forcément des erreurs"
+order_items,outliers IQR : price,8427,"valeurs extrêmes à examiner, pas forcément des erreurs"
+order_payments,commandes avec plusieurs paiements,2961,ne pas joindre items et payments sans agréger
+order_reviews,valeurs manquantes : review_comment_title,87656,88.34% de la colonne
+order_reviews,valeurs manquantes : review_comment_message,58247,58.7% de la colonne
+order_reviews,clé non unique ['review_id'],814,
+orders,valeurs manquantes : order_delivered_customer_date,2965,2.98% de la colonne
+orders,valeurs manquantes : order_delivered_carrier_date,1783,1.79% de la colonne
+orders,incohérence chronologique : transporteur avant approbation,1359,
+orders,orders sans ligne d'items,775,
+orders,valeurs manquantes : order_approved_at,160,0.16% de la colonne
+orders,incohérence chronologique : livraison avant transporteur,23,
+orders,delivered sans date de livraison,8,incohérence statut/date
+orders,non delivered avec date de livraison,6,incohérence statut/date
+orders,orders sans paiement,1,
+products,outliers IQR : product_weight_g,4551,"valeurs extrêmes à examiner, pas forcément des erreurs"
+products,valeurs manquantes : product_category_name,610,1.85% de la colonne
+products,valeurs manquantes : product_name_lenght,610,1.85% de la colonne
+products,valeurs manquantes : product_description_lenght,610,1.85% de la colonne
+products,valeurs manquantes : product_photos_qty,610,1.85% de la colonne
+products,valeurs manquantes : product_weight_g,2,0.01% de la colonne
+products,valeurs manquantes : product_length_cm,2,0.01% de la colonne
+products,valeurs manquantes : product_height_cm,2,0.01% de la colonne
+products,valeurs manquantes : product_width_cm,2,0.01% de la colonne
+valeurs impossibles/suspectes,payments.payment_value = 0,9,
+valeurs impossibles/suspectes,products.weight_g = 0,4,
+valeurs impossibles/suspectes,payments.installments = 0,2,

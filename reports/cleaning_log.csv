@@ -1,0 +1,20 @@
+table,rule,action,n_affected,justification
+order_payments,payment_value = 0,signalé (flag),9,conservés ; non utilisés pour le CA
+order_payments,payment_type = not_defined,signalé (flag),3,conservés ; non utilisés pour le CA
+products,catégorie manquante,modifié,610,remplacée par 'unknown' ; produits conservés
+products,product_weight_g = 0,modifié,4,remplacé par une valeur manquante
+products,traduction manuelle de 2 catégories,modifié,13,absentes de la table de traduction officielle
+products,fautes d'orthographe dans les noms de catégories (EN),modifié,154,"corrigées (fashio_, costruction_) ; défaut de la table de traduction source"
+order_reviews,"doublons sur (review_id, order_id)",supprimé,0,on conserve l'avis le plus récent
+order_reviews,review_id partagé entre plusieurs commandes,signalé (flag),814,conservé : lien avec la commande préservé
+geolocation,lignes entièrement dupliquées,supprimé,261831,doublon exact sans information supplémentaire
+geolocation,coordonnées hors du Brésil,supprimé,33,erreurs manifestes de géocodage
+geolocation,agrégation par code postal,modifié,719289,une ligne par code postal (médiane lat/lng) pour éviter les jointures multipliantes
+orders,hors fenêtre janv. 2017 - août 2018,signalé (flag),349,"périodes quasi vides (2016, sept.-oct. 2018) ; conservées en base"
+orders,statut différent de delivered,signalé (flag),2963,le CA est calculé sur les commandes livrées uniquement
+orders,commandes sans ligne d'items,signalé (flag),775,aucun CA calculable ; conservées
+orders,commandes sans paiement,signalé (flag),1,conservées
+orders,remise transporteur avant approbation,signalé (flag),1359,incohérence conservée ; n'affecte pas le CA
+orders,livraison avant remise transporteur,signalé (flag),23,incohérence conservée ; n'affecte pas le CA
+orders,statut delivered sans date de livraison,signalé (flag),8,incohérence conservée ; n'affecte pas le CA
+orders,date de livraison sans statut delivered,signalé (flag),6,incohérence conservée ; n'affecte pas le CA
