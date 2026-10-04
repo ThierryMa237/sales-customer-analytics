@@ -155,8 +155,8 @@ Dashboard de 5 pages construit dans **Power BI Service** : Executive Overview, S
 | Page | Capture |
 |---|---|
 | Executive Overview | ![Executive Overview](powerbi/screenshots/01_executive_overview.png) |
-| Sales Analysis | ![Sales Analysis](powerbi/screenshots/02_sales_analysis.png) |
-| Customer Analysis | ![Customer Analysis](powerbi/screenshots/03_customer_analysis.png) |
+| Sales Analysis | ![Sales Analysis](powerbi/screenshots/02_sales_analytics.png) |
+| Customer Analysis | ![Customer Analysis](powerbi/screenshots/03_customers_analysis.png) |
 | Product Analysis | ![Product Analysis](powerbi/screenshots/04_product_analysis.png) |
 | Geographic Analysis | ![Geographic Analysis](powerbi/screenshots/05_geographic_analysis.png) |
 
