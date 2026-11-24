@@ -214,7 +214,7 @@ Python 3.13 · pandas · NumPy · matplotlib · SQLAlchemy · psycopg2 · openpy
 Prérequis : Python 3.13, PostgreSQL, un compte Kaggle (téléchargement du dataset).
 
 ```bash
-git clone <url-du-depot>
+git clone https://github.com/ThierryMa237/sales-customer-analytics.git
 cd sales-customer-analytics
 
 python3 -m venv .venv
